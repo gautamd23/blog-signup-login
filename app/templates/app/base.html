@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <link rel="stylesheet" href="{% static 'app/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+</head>
+<body style="background-color: #b1e6dc">
+    <div class="container-fluid bg-dark">
+        {% include 'app/nav.html' %}
+    </div>
+    <div class="container text-center mx-auto">
+        <div class="row">
+            <div class="col-sm-12">
+                {% block msg %}
+                {% endblock msg %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% block side %}
+        {% endblock side %}
+
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
+<script src="{% static 'app/js/jquery.js' %}"></script>
+<script src="{% static 'app/js/popper.js' %}"></script>
+<script src="{% static 'app/js/bootstrap.js' %}"></script>
+</body>
+</html>

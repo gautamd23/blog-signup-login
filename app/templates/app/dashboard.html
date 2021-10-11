@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% load static %}
+    {% block msg %}
+    <div class="col-sm-10 mx-auto">
+            {% if messages %}
+              {% for i in messages %}
+                 <p {% if i.tags %} class="alert alert-{{i.tags}} mt-5" {% endif %}>{{i}}</p>
+              {% endfor %}
+            {% endif %}
+    </div>
+    {% endblock msg %}
+    {% block side %}
+         <div class="col-sm-2 text-black my-5 text-center mx-auto">
+             <h4 class="my-5">Active User</h4>
+             <h5>{{full_name}}</h5>
+             {% for group in groups %}
+               <p>{{group.name}}</p>
+             {% endfor %}
+             <p>Only Admin can delete the blog</p>
+         </div>
+    {% endblock side %}
+    {% block content %}
+        <div class="col-sm-8 mx-auto">
+            <h3 class="text-black my-5 ">Dashboard </h3>
+            <a href="{% url 'addblog' %}" class="btn btn-success">Add Blog</a>
+           <h4 class="text-center alert alert-info mt-3 text-black" style="background-color:white">Blog Information</h4>
+           {% if post %}
+              <table class="table table-hover bg-white mx-auto">
+                  <th>
+                      <tr class="text-center">
+                          <th scope="col" style="width:2%">ID</th>
+                          <th scope="col" style="width:2%">Title</th>
+                          <th scope="col" style="width:2%">Description</th>
+                          <th scope="col" style="width:2%">Action</th>
+
+                      </tr>
+                  </th>
+                  <tb>
+                      {% for i in post %}
+                        <tr>
+                            <th scope="row">{{i.id}} </th>
+                            <td>{{i.title}}</td>
+                            <td>{{i.desc}}</td>
+                            <td class="text-center">
+                                <a href="{% url 'updateblog' i.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                {% if perms.app.delete_post %}
+                                <form action="{% url 'deleteblog' i.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                  </tb>
+              </table>
+           {% else %}
+             <h4 class="text-center alert alert-warning">No Record</h4>
+           {% endif %}
+    </div>
+    {% endblock content %}
